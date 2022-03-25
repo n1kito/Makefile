@@ -1,5 +1,5 @@
 <p align="center">
-<img src="img/Makefile.png">
+<img src="img/Makefile.png" width="300px">
 </p>
 
 # Makefile
