@@ -14,6 +14,7 @@ The make program uses the makefile data base and the last-modification times of 
 <summary>Understanding the compilation process</summary>
 Content.
 </details>
+
 #Resources
 [Apparently all I need to know is in here.](https://www.gnu.org/software/make/manual/make.html)  
 I might die.
