@@ -13,8 +13,9 @@ I predict there will be a lot of sections identical to the official [GNU documen
 
 The **end goal** of this first step is to build a solid understanding of Makefiles, and use it to write a working Makefile template that is my own, and that I will be able to use for my upcoming 42 projects.  
 
-### Requirements for this Makefile
-<details><summary>Click to expand.</summary>
+> 🚨 This README **will definitely** be missing some information/details, because I'm only taking what _I think_ is enough for me. If you're using this documentation to build your Makefile and something just does not work as expected, please refer to the corresponding section in the [GNU documentation](https://www.gnu.org/software/make/manual/make.html). 🚨
+
+# Requirements for this Makefile
 
 - [ ] Be clearly written and divided into sections, the main one being the variables that are meant to be edited to customize the Makefile for each project and its needs.
 - [ ] It should update my executable when any of the source files (including header files) is updated. (_I know that's what Makefiles **do**, but still._)
@@ -25,19 +26,12 @@ The **end goal** of this first step is to build a solid understanding of Makefil
   - I could also add a few commands that run Valgrind and grep a possible '0 leaks' output and then outputs either "No leaks found", or the valgrind output if leaks are actually found.
     - This could be called `make harriet` 🔎
 
-</details>
-
-<br>
-
-> 🚨 This README **will definitely** be missing some information/details, because I'm only taking what _I think_ is enough for me. If you're using this documentation to build your Makefile and something just does not work as expected, please refer to the corresponding section in the [GNU documentation](https://www.gnu.org/software/make/manual/make.html). 🚨
-
 # Result of this learning process
 
 My [Makefile template](Makefile_Template) :)
 
 ![thankful.gif](http://www.reactiongifs.com/r/2013/11/oprah-clasps-hands.gif)
 
----
 
 # Now let's learn about Makefiles
 
