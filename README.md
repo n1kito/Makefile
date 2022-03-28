@@ -12,6 +12,7 @@ The make program uses the makefile data base and the last-modification times of 
 **What does the linker do ?**
 <details>
 <summary>Understanding the compilation process</summary>
+<br>
 
 > Compilation is the process of translating the code you write into a language that is native to the machine you are targeting.
 
