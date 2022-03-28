@@ -29,7 +29,7 @@ The **end goal** of this first step is to build a solid understanding of Makefil
 
 # Result of this learning process
 
-My [Makefile template](Makefile_template) :)
+My [Makefile template](Makefile_Template) :)
 
 ![thankful.gif](http://www.reactiongifs.com/r/2013/11/oprah-clasps-hands.gif)
 
