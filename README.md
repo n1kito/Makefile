@@ -32,7 +32,6 @@ My [Makefile template](Makefile_Template) :)
 
 ![thankful.gif](http://www.reactiongifs.com/r/2013/11/oprah-clasps-hands.gif)
 
-
 # Now let's learn about Makefiles
 
 ![she_devil](https://media3.giphy.com/media/10LziGOBkifXzO/giphy.gif?cid=ecf05e47ij1i2piw7pg9jnf3gpwo7dcfr9fj3xap21bsd8wf&rid=giphy.gif&ct=g)
