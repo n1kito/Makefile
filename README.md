@@ -7,13 +7,14 @@
 For the first few projects at 42, I have used Makefiles without fully understanding them, as I have realized is pretty common amongst my peers.  
 At some point, we get a Makefile that works, and we keep using it because our main focus are the programs we are working on for our projects. This has led to some frustration, as I really don't like submitting work that features parts I haven't 100% understood, and I also need to be able to fix things that do not work as expected.
 
-The goals of this section is to study the documentation around Makefiles and the `make` utility, as well as the surrounding processes that I haven't necessarily made the effort to fully understand, like compilation.
+The goals of this section is to study the documentation around Makefiles and the `make` utility, as well as the surrounding processes that I haven't necessarily made the effort to fully grasp, like compilation.
 
 I predict there will be a lot of sections identical to the official [GNU documentation](https://www.gnu.org/software/make/manual/make.html) but that is fine, it helps me learn and will, in the end, provide a curated resource for my needs.
 
-The **end goal** of this first step is to build a solid understanding of Makefiles, and use it to write a working Makefile that is my own, and that I will be able to use for my upcoming 42 projects.  
+The **end goal** of this first step is to build a solid understanding of Makefiles, and use it to write a working Makefile template that is my own, and that I will be able to use for my upcoming 42 projects.  
 
 ### Requirements for this Makefile
+<details><summary>Click to expand.</summary>
 - [ ] Be clearly written and divided into sections, the main one being the variables that are meant to be edited to customize the Makefile for each project and its needs.
 - [ ] It should update my executable when any of the source files (including header files) is updated. (_I know that's what Makefiles **do**, but still._)
   - [ ] And update my executable when _any_ of the libraries it depends on is updated, especially when it's my own library with its own Makefile.
@@ -22,6 +23,7 @@ The **end goal** of this first step is to build a solid understanding of Makefil
 - [ ] Maybe add some useful rules, like "debug" to compile with the `-g` flag, or `leaks` to use `debug` and then run `valgrind` on the program.
   - I could also add a few commands that run Valgrind and grep a possible '0 leaks' output and then outputs either "No leaks found", or the valgrind output if leaks are actually found.
     - This could be called `make harriet` 🔎
+</details>
 
 <br>
 
