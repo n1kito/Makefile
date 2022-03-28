@@ -425,7 +425,7 @@ Normally you should call your makefile either `makefile` or `Makefile`. (We reco
 
 The first name checked, `GNUmakefile`, is not recommended for most makefiles. 
 
-## Including Other Makefiles
+### Including Other Makefiles
 
 The `include` directive tells `make` to suspend reading the current Makefile and read one or more other Makefiles before continuing.
 
@@ -460,6 +460,332 @@ If you want make to simply ignore a makefile which does not exist or cannot be r
 This acts like include in every way except that there is no error (not even a warning) if any of the filenames (or any prerequisites of any of the filenames) do not exist or cannot be remade.
 
 For compatibility with some other make implementations, `sinclude` is another name for `-include`.
+
+### How `make` reads a Makefile
+
+GNU `make` does its work in two distinct phases.  
+During the first one, it reads all the makefiles, included makefiles etc... and internalizes all the variables and their values and implicit and explicit rules, and builds a dependency graph of all the targets and their prerequisites.
+
+For example:
+
+```mermaid
+graph BT
+title["Makefile Dependency Graph"]
+title-->3.1
+style title stroke-width:0
+linkStyle 0 stroke-width:0;
+2.1[function.c]-->1.1[program.h];
+3.1[main.c]-->1.1;
+2.4[function2.c]-->1.4;
+3.1-->1.2[libft];
+3.1-->1.3[myLib];
+3.1-->1.4[other.h];
+3.1-->2.4;
+3.1-->2.1;
+```
+
+During the **second phase**, `make` uses this internalized data to determine which targets need to be updated and run the recipes necessary to update them.
+
+It is crucial to understand this two-step approach, because it has a direct impact on how variable and function expansion happens; this is often a source of some confusion when writing Makefiles.  
+Different constructs can be found in a makefile, and the phase in which expansion happens for each part of the construct.
+
+We say that expansion is _immediate_ if it happens during the first phase: `make` will expand that part of the construct as the makefile is parsed. We say that expansion is _deferred_ if it's not immediate. Expansion of a defered construct part is delayed until the expansion is used: either when it referenced in an immediate context, or when it is needed during the second phase.
+
+Variable definitions are done as follows:
+
+```makefile
+immediate = deferred
+immediate ?= deferred
+immediate := immediate
+immediate ::= immediate
+immediate += deferred or immediate
+immediate != immediate
+
+define immediate
+  deferred
+endef
+
+define immediate =
+  deferred
+endef
+
+define immediate ?=
+  deferred
+endef
+
+define immediate :=
+  immediate
+endef
+
+define immediate ::=
+  immediate
+endef
+
+define immediate +=
+  deferred or immediate
+endef
+
+define immediate !=
+  immediate
+endef
+```
+
+_This one is a bit of a loaded notion for now, [revisiting](https://www.gnu.org/software/make/manual/make.html#Reading-Makefiles) might be a good idea._
+
+### How Makefiles are Parsed
+
+GNU `make` parses makefiles line-by-line. Parsing proceeds using the following steps:
+1. Read in a full logical line, including backslash-escaped lines.
+2. Remove comments.
+3. If the line begins with the recipe prefix character and we are in a rule contest, add the line to the current recipe and read the next line.
+4. Expand elements of the line which appear in an immediate expansion context.
+5. Scan the line for a separator character surch as `;` or `=`, to determine whether the line is a macro assignment or a rule.
+6. Internalize the resulting operation and read the next line.
+
+## Writing Rules
+
+A _rule_ appears in the makefile and says when and how to remake certain files, called the _targets_ (usually only one per rule). It lists the _prerequisites_ of the target, and the _recipe_ to use to create or update the target.
+
+The order of the rules does not matter, except for determining the _default goal_: the target that `make` should consider first, which is the first rule in the first makefile.  
+Therefore, we usually write the makefile so that the first rule is the one for compilibng the entire program or all the programs described by the makefile.
+
+#### Rule Example
+
+```makefile
+foo.o : foo.c defs.h	# module for twiddling the frobs
+	cc -c -g foo.c
+```
+The target is `foo.o` and its prerequisites are `foo.c` and `defs.c`.  
+It has one command in the recipe `cc -c -g foo.c`.  
+The recipe starts with a tab to identify it as a recipe.
+
+**This rule says two things:**
++ How to decide whether `foo.o` is out of date: it is out of date if it does not exist, or if either `foo.c` or `defs.h` is more recent than it.
++ How to update the file `foo.o`: by running cc as stated. The recipe does not explicitly mention `defs.h`, but we presume that `foo.c` includes it, and that is why `defs.h` was added to the prerequisites.
+
+### Rule Syntax
+
+In general, a rule looks like this:
+
+```makefile
+targets : prerequisites
+	recipe
+	...
+```
+or like this:
+```makefile
+targets : prerequisites ; recipe
+	recipe
+	...
+```
+The _targets_ are filenames, separated by spaces. Wildcard characters can be used. (_see after_)
+
+A rule tells `make` two things:
+1. When the targets are out of date
+2. How to update them when necessary
+
+The criterion for being out of date is specified in terms of the prerequisites, which consists of file names separated by spaces.
+A target is out of date if it does not exist or if it is older than any of the prerequisites (by comparison of last-modification times).
+The idea is that the contents of the target file are computed based on information in the prerequisites, so if any of the prerequisites changes, the contents of the existing target file are no longer necessary valid.
+
+How to update is specified by a _recipe_. This is one or more lines to be executed by the shell (normally 'sh'), but with [some extra features](https://www.gnu.org/software/make/manual/make.html#Recipes).
+
+### Types of prerequisites
+
+There are two types of prerequisites in `make`:
+1. Normal
+2. Order-only
+
+```makefile
+targets : normal-prerequisites | order-only-prerequisites
+```
+
+#### Normal prerequisites
+
+A normal prerequisite makes two statements:
+First, it imposes an order in which the recipes will be invoked: the recipes for all the prerequisites of a target will be completed before the recipe for the target is run.  
+Second, it imposes a dependency relationship: if any prerequisite is newer than the target, then the target is considered out-of-date and must be rebuilt.
+
+####Order-only prerequisites  
+Occasionally, however, you have a situation where you want to impose a specific ordering on the rules to be invoked without forcing the target to be updated if one of those rules is executed. In that case, you want to define order-only prerequisites. Order-only prerequisites can be specified by placing a pipe symbol (|) in the prerequisites list: any prerequisites to the left of the pipe symbol are normal; any prerequisites to the right are order-only.
+
+#### Usage
+
+Consider an example where your targets are to be placed in a separate directory, and that directory might not exist before `make` is run.  
+In this situation, we want the directory to be created before any targets are placed into it but, because the timestamps on directories change whenever a file is added, removed, or renamed, we certainly don't want to rebuild all the targets whenever the directory's timestamp changes.  
+One way to manage this is with order-only prerequisites: make the directory an order-only prerequisite on all the targets:
+
+```makefile
+OBJDIR := objdir
+OBJS := $(addprefix $(OBJDIR)/,foo.o bar.o baz.o)
+
+$(OBJDIR)/%.o : %.c
+        $(COMPILE.c) $(OUTPUT_OPTION) $<
+
+all: $(OBJS)
+
+$(OBJS): | $(OBJDIR)
+
+$(OBJDIR):
+        mkdir $(OBJDIR)
+```
+
+Now, the rule to create the `objdir` directory will be run if needed, before any `.o` is built, but no `.o` will be built because the `` directory timestamp changed.
+
+### Using Wildcard Characters in File names
+
+The wildcard characters in `make` are: `*`, `?`, and `[..]`.  
+
+| Character | Description                                               | Example                                                     |
+|-----------|-----------------------------------------------------------|-------------------------------------------------------------|
+| *         | Matches any number of characters, anywhere in the string. | **wh*** will find **what**, **while** and **why**, but not **awhile** or **watch**. |
+| ?         | Matches a single alphabet in a specific position.         | **b?ll** finds **ball**, **bell** and **bill**.                             |
+| [...]     | Matches characters within the brackets.                   | **b[ae]ll** finds **ball** and **bell**, but not bill.                  |
+
+
+`~` at the beginning of a file name also has a special meaning. If alone or followed by a slash, it represents the home directory.  
+If the `~` is followed by a word, it represents the home directory of the user named by that word.
+```shell
+~nikito/bin
+# expands to
+/home/nikito/bin
+```
+
+🚨 Wildcard expansion is performed by `make` automatically in targets and in prerequisites. In recipes, the shell is responsible for wildcard expansion. In wildcard expansion happens **only if you request it explicitly with the wildcard function**.
+
+#### Wildcard examples
+
+Rule to delete all object files:
+```makefile
+clean:
+	rm -f *.o
+```
+
+🚨 Wildcard expansion does not happen when you define a variable, so if I write this:
+```makefile
+objects = *.o
+```
+then the value of the variable `objects` is the actual string `*.o` 
+However, if you use the value of `objects` in a target or prerequisite, wildcard expansion will take place there.  
+If you use the value of `objects` in a recipe, the shell may perform wildcard expansion when the recipe runs.  
+To set `objects` to the expansion, instead use:
+
+```makefile
+object := $(wildcard *.o)
+```
+Interesting: [pitfalls of using wildcards](https://www.gnu.org/software/make/manual/make.html#Wildcard-Pitfall)
+
+### The function `wildcard`
+
+Wildcard expansion happens automatically in rules. But wildcard expansion does not normally take place when a variable is set, or inside the arguments of a function. If you want to do wildcard expansion in such places, you need to use the wildcard function, like this:
+
+```makefile
+$(wildcard pattern...)
+```
+
+This string, used anywhere in a makefile, is replaced by a space-separated list of names of existing files that match one of the given file name patterns. If no existing file name matches a pattern, then that pattern is omitted from the output of the wildcard function. Note that this is different from how unmatched wildcards behave in rules, where they are used verbatim rather than ignored.
+
+Use this function to get a list of all the C source files in a folder, like:
+```makefile
+$(wildcard *.c)
+```
+
+We can directly change the life of C source files into a list of object files by replacing the `.c` suffix with `.o` in the result, like:
+```makefile
+$(patsubst %.c,%.o,$(wildcard *.c))
+```
+Here, we have used another function, `patsubst`.
+
+<details><summary>See more about patsubst.</summary>
+
+```shell
+$(patsubst pattern,replacement,text)
+```
+Finds whitespace-separated words in `text` that match `pattern` and replaces them with `replacement`.
+
+Here pattern may contain a `%` which acts as a wildcard, matching any number of any characters within a word. If replacement also contains a `%`, the `%` is replaced by the text that matched the `%` in pattern. Only the first `%` in the pattern and replacement is treated this way; any subsequent `%` is unchanged.
+
+</details>
+
+Therefore, a makefile to compile all C source files in the directory and then link them together could be written as follows:
+
+```makefile
+objects := $(patsubst %.c,%.o,$(wildcard *.c))
+
+foo : $(objects)
+        cc -o foo $(objects)
+```
+<hr>
+
+**What is the `:=` operator ?**
+
+<details><summary>Click to expand.</summary>
+
+
+`=` is for _Recursively Expanded Variables_, `:=` is for _Simply Expanded Variables_.
+
+The value of a simply expanded variable is scanned once and for all, expanding any references to other variables and functions, when the variable is defined. The actual value of the simply expanded variable is the result of expanding the text that you write. It does not contain any references to other variables; it contains their values as of the time this variable was defined.
+
+**Simply expanded variables** generally make complicated makefile programming more predictable because they work like variables in most programming languages.
+
+[Click to learn more.](https://www.gnu.org/software/make/manual/make.html#Flavors)
+
+</details>
+<hr>
+
+### Static pattern rules
+
+They are rules that specify multiple targets and construct the prerequisite names for each target based on the target name.
+
+#### Syntax
+
+```makefile
+targets ...: target-pattern: prereq-patterns ...
+	recipe
+	...
+```
+
+`target` specifies the targets the rule applies to. They can contain wildcard characters, just like the target of ordinary rules.  
+
+The `target-pattern` and `prereq-patterns` say how to compute the prerequisites of each target. each target is matched against the `target pattern` to extract a part of the target name, called the `stem`.This `stem` is substituted into each of the `prereq-patterns` to make the prerequisite names (one from each `prereq-pattern`).
+
+[learn more.](https://www.gnu.org/software/make/manual/make.html#Static-Usage)
+
+Example that compiles each of foo.o and bar.o from the corresponding .c files:
+```makefile
+objects = foo.o bar.o
+
+all: $(objects)
+
+$(objects): %.o: %.c
+        $(CC) -c $(CFLAGS) $< -o $@
+```
+
+Here ‘$<’ is the automatic variable that holds the name of the prerequisite and ‘$@’ is the automatic variable that holds the name of the target; see [Automatic Variables](https://www.gnu.org/software/make/manual/make.html#Automatic-Variables).
+
+<hr>
+<details><summary>Automatic Variables</summary>
+
+[More info.](https://www.gnu.org/software/make/manual/make.html#Automatic-Variables)
+
+Suppose you are writing a pattern rule to compile a `.c` file into a `.o` file: how do you write the `cc` command so that it operates on the right source file name? You cannot write the name in the recipe, because the name is different each time the implicit rule is applied.
+
+What you do is use a special feature of make, the automatic variables. These variables have values computed afresh for each rule that is executed, based on the target and prerequisites of the rule. In this example, you would use `$@` for the object file name and `$<` for the source file name.
+
+| Variables            | Role                                                                                                             |
+|----------------------|------------------------------------------------------------------------------------------------------------------|
+| `$@`                 | The file name of the target of the rule.                                                                         |
+| `$%`                 | The target member name.                                                                                          |
+| `$<`                 | The name of the first prerequisite.                                                                              |
+| `$?`                 | The names of all the prerequisites that are newer than the target.                                               |
+| `$^`                 | The names of all the prerequisites, with spaces between them.                                                    |
+| `$+`                 | Like `$^`, but prerequisites listed more than once are duplicated in the order they were listed in the makefile. |
+| <code>$&#124;</code> | The names of all the order-only prerequisites, with spaces between them.                                         |
+| `$*`                  | The stem with which an implicit rule matches.                                                                    |
+
+
+</details>
+<hr>
 
 # Resources
 
