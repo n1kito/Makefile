@@ -15,6 +15,7 @@ The **end goal** of this first step is to build a solid understanding of Makefil
 
 ### Requirements for this Makefile
 <details><summary>Click to expand.</summary>
+
 - [ ] Be clearly written and divided into sections, the main one being the variables that are meant to be edited to customize the Makefile for each project and its needs.
 - [ ] It should update my executable when any of the source files (including header files) is updated. (_I know that's what Makefiles **do**, but still._)
   - [ ] And update my executable when _any_ of the libraries it depends on is updated, especially when it's my own library with its own Makefile.
@@ -23,6 +24,7 @@ The **end goal** of this first step is to build a solid understanding of Makefil
 - [ ] Maybe add some useful rules, like "debug" to compile with the `-g` flag, or `leaks` to use `debug` and then run `valgrind` on the program.
   - I could also add a few commands that run Valgrind and grep a possible '0 leaks' output and then outputs either "No leaks found", or the valgrind output if leaks are actually found.
     - This could be called `make harriet` 🔎
+
 </details>
 
 <br>
