@@ -37,7 +37,7 @@ all: $(NAME)
 $(NAME): $(OBJ_FILES)
 	make -C libft
 	@$(CC) -o $(NAME) $(OBJ_FILES) -L $(LIB_DIR) -l $(LIB)
-	@echo "$(GREEN)$(NAME) compiled :)$(DEF_COLOR)"
+	@echo "$(GREEN)$(NAME) compiled :)$(END_COLOR)"
 
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.c Makefile libft/src/*.c | $(BIN_DIR)
 	@$(CC) -MD -c $(CFLAGS) -I $(INC_DIR) -I libft/inc $< -o $@
