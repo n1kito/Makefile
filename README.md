@@ -2,22 +2,61 @@
 <img src="img/Makefile.png" width="300px">
 </p>
 
+<hr>
+<details><summary>Table of Contents</summary>
+
+- [Goal of this README](#goal-of-this-readme)
+- [Objectives for this Makefile](#objectives-for-this-makefile)
+- [Result of this learning process](#result-of-this-learning-process)
+- [Now let's learn about Makefiles](#now-let-s-learn-about-makefiles)
+    * [Compilation steps](#compilation-steps)
+    * [Preprocessing](#preprocessing)
+    * [Compilation](#compilation)
+    * [Assembly](#assembly)
+    * [Linking](#linking)
+    * [What a Makefile Rule looks like](#what-a-makefile-rule-looks-like)
+    * [How `make` processes a Makefile](#how--make--processes-a-makefile)
+    * [Using Variables to make Makefiles simpler](#using-variables-to-make-makefiles-simpler)
+    * [Letting `make` deduce the Recipes](#letting--make--deduce-the-recipes)
+    * [Another Style of Makefile (the one we use at 42)](#another-style-of-makefile--the-one-we-use-at-42-)
+    * [Rules for cleaning the directory](#rules-for-cleaning-the-directory)
+    * [Writing Makefiles](#writing-makefiles)
+        + [Splitting lines](#splitting-lines)
+        + [Naming the Makefile](#naming-the-makefile)
+        + [Including Other Makefiles](#including-other-makefiles)
+        + [How `make` reads a Makefile](#how--make--reads-a-makefile)
+        + [How Makefiles are Parsed](#how-makefiles-are-parsed)
+    * [Writing Rules](#writing-rules)
+        - [Rule Example](#rule-example)
+        + [Rule Syntax](#rule-syntax)
+        + [Types of prerequisites](#types-of-prerequisites)
+            - [Normal prerequisites](#normal-prerequisites)
+            - [Order-only prerequisites](#order-only-prerequisites)
+            - [Usage](#usage)
+        + [Using Wildcard Characters in File names](#using-wildcard-characters-in-file-names)
+            - [Wildcard examples](#wildcard-examples)
+        + [The function `wildcard`](#the-function--wildcard-)
+        + [Static pattern rules](#static-pattern-rules)
+            - [Syntax](#syntax)
+- [Resources](#resources)
+</details>
+<hr>
+
 # Goal of this README
 
-For the first few projects at 42, I have used Makefiles without fully understanding them, as I have realized is pretty common amongst my peers.  
-At some point, we get a Makefile that works, and we keep using it because our main focus are the programs we are working on for our projects. This has led to some frustration, as I really don't like submitting work that features parts I haven't 100% understood, and I also need to be able to fix things that do not work as expected.
+For the first few projects at 42, I have used Makefiles without fully understanding them, as I have realized is pretty common amongst my peers. At some point, we've got a Makefile that works, and we keep using it because our main focus are the programs we are working on for our projects. This has led to some frustration, as I really don't like submitting work that features parts I haven't 100% understood, and I also need to be able to fix things that do not work as expected. Turns out I could not ✨
 
-The goals of this section is to study the documentation around Makefiles and the `make` utility, as well as the surrounding processes that I haven't necessarily made the effort to fully grasp, like compilation.
+My goal here is to study the documentation around Makefiles and the `make` utility, as well as the surrounding processes that I haven't necessarily made the effort to fully grasp, like **compilation**.
 
 I predict there will be a lot of sections identical to the official [GNU documentation](https://www.gnu.org/software/make/manual/make.html) but that is fine, it helps me learn and will, in the end, provide a curated resource for my needs.
 
-The **end goal** of this first step is to build a solid understanding of Makefiles, and use it to write a working Makefile template that is my own, and that I will be able to use for my upcoming 42 projects.  
+The **end goal** of this first step is to build a solid basic understanding of Makefiles, and use it to write a working Makefile template that is my own, and that I will be able to use for my upcoming 42 projects.  
 
 > 🚨 This README **will definitely** be missing some information/details, because I'm only taking what _I think_ is enough for me. If you're using this documentation to build your Makefile and something just does not work as expected, please refer to the corresponding section in the [GNU documentation](https://www.gnu.org/software/make/manual/make.html). 🚨
 
 # Objectives for this Makefile
 
-<details><summary>(Click to expand objectives)</summary>
+<details><summary>(Click to expand objectives) 🔎</summary>
 
 - [x] Be clearly written and divided into sections, the main one being the variables that are meant to be edited to customize the Makefile for each project and its needs.
 - [x] It should update my executable when any of the source files (including header files) is updated. (_I know that's what Makefiles **do**, but still._)
@@ -31,7 +70,7 @@ Bonus:
     - This could be called `make harriet` 🔎
 
 </details>
-    
+
 # Result of this learning process
 
 My [Makefile template](Makefile) :)
@@ -44,13 +83,14 @@ My [Makefile template](Makefile) :)
 
 The make program uses the makefile database and the last-modification times of the files to decide which of the files need to be updated.
 
-**Concequences of updating files**
+**Consequences of updating files**
 + When make recompiles the editor, each changed C source file must be recompiled.  
 + If a header file has changed, each C source file that includes the header file must be recompiled to be safe. Each compilation produces an object file corresponding to the source file.  
 + Finally, if any source file has been recompiled, all the object files, whether newly made or saved from previous compilations, must be linked together to produce the new executable editor.
 
+<hr>
 <details>
-<summary><b>Understanding the compilation process</b></summary>
+<summary><b>Understanding the compilation process 🧱 </b></summary>
 <br>
 
 > Compilation is the process of translating the code you write into a language that is native to the machine you are targeting.
@@ -189,6 +229,7 @@ Sources:
 [This video](https://www.youtube.com/watch?v=8XBsNtx6Wyk)
 
 </details>
+<hr>
 
 ## What a Makefile Rule looks like
 
