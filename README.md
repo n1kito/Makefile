@@ -17,11 +17,13 @@ The **end goal** of this first step is to build a solid understanding of Makefil
 
 # Requirements for this Makefile
 
-- [ ] Be clearly written and divided into sections, the main one being the variables that are meant to be edited to customize the Makefile for each project and its needs.
-- [ ] It should update my executable when any of the source files (including header files) is updated. (_I know that's what Makefiles **do**, but still._)
-  - [ ] And update my executable when _any_ of the libraries it depends on is updated, especially when it's my own library with its own Makefile.
-- [ ] Independently look for all the source files by itself in the necessary folders, avoiding me the task of listing them one by one. I know this can be done I just want to make it happen.
-- [ ] I also want the Makefile to display colored messages that will help users understand what is going on (and be fun to look at).
+- [x] Be clearly written and divided into sections, the main one being the variables that are meant to be edited to customize the Makefile for each project and its needs.
+- [x] It should update my executable when any of the source files (including header files) is updated. (_I know that's what Makefiles **do**, but still._)
+  - [x] And update my executable when _any_ of the libraries it depends on is updated, especially when it's my own library with its own Makefile.
+    - I think this works but I need to check in more detail.
+- [x] Independently look for all the source files by itself in the necessary folders, avoiding me the task of listing them one by one. I know this can be done I just want to make it happen.
+- [x] I also want the Makefile to display colored messages that will help users understand what is going on (and be fun to look at).
+Bonus:
 - [ ] Maybe add some useful rules, like "debug" to compile with the `-g` flag, or `leaks` to use `debug` and then run `valgrind` on the program.
   - I could also add a few commands that run Valgrind and grep a possible '0 leaks' output and then outputs either "No leaks found", or the valgrind output if leaks are actually found.
     - This could be called `make harriet` 🔎
@@ -794,3 +796,5 @@ What you do is use a special feature of make, the automatic variables. These var
 I might die.
 
 Super useful and used in my template: [Functions for File Names](https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html)
+
+To understand how to include **dependency management** in my Makefile so files would not only update when headers are modified, but **only** the files that depended on said headers would recompile as opposed to all of the files, I was able to use [this StackOverflow answer](https://stackoverflow.com/a/39731462/17684439), but I definitely need to make more research on `-include` and the `-MD` compilation flag.
