@@ -9,7 +9,7 @@
 - [Objectives for this Makefile](#objectives-for-this-makefile)
 - [Result of this learning process](#result-of-this-learning-process)
 - [Now let's learn about Makefiles](#now-let-s-learn-about-makefiles)
-	* [Compilation thoery](#compilation-thoery)
+	* [Compilation theory](#compilation-thoery)
 		+ [Compilation steps](#compilation-steps)
 		+ [Preprocessing](#preprocessing)
 		+ [Compilation](#compilation)
@@ -90,14 +90,13 @@ The make program uses the makefile database and the last-modification times of t
 + If a header file has changed, each C source file that includes the header file must be recompiled to be safe. Each compilation produces an object file corresponding to the source file.  
 + Finally, if any source file has been recompiled, all the object files, whether newly made or saved from previous compilations, must be linked together to produce the new executable editor.
 
-<hr>
-<details>
-<summary><b>Understanding the compilation process 🧱 </b></summary>
+## Compilation theory
+
+<details><summary><b>Understanding the compilation process 🧱 </b></summary>
 <br>
 
 > Compilation is the process of translating the code you write into a language that is native to the machine you are targeting.
 
-## Compilation thoery
 
 ### Compilation steps
 
