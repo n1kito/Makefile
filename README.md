@@ -777,7 +777,7 @@ foo : $(objects)
 **What is the `:=` operator ?**
 
 <details><summary>Click to expand.</summary>
-
+<br>
 
 `=` is for _Recursively Expanded Variables_, `:=` is for _Simply Expanded Variables_.
 
