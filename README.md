@@ -748,6 +748,7 @@ $(patsubst %.c,%.o,$(wildcard *.c))
 ```
 Here, we have used another function, `patsubst`.
 
+<hr>
 <details><summary>See more about patsubst.</summary>
 
 ```shell
@@ -758,7 +759,7 @@ Finds whitespace-separated words in `text` that match `pattern` and replaces the
 Here pattern may contain a `%` which acts as a wildcard, matching any number of any characters within a word. If replacement also contains a `%`, the `%` is replaced by the text that matched the `%` in pattern. Only the first `%` in the pattern and replacement is treated this way; any subsequent `%` is unchanged.
 
 </details>
-
+<hr>
 Therefore, a makefile to compile all C source files in the directory and then link them together could be written as follows:
 
 ```makefile
