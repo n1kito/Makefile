@@ -846,8 +846,7 @@ What you do is use a special feature of make, the automatic variables. These var
 
 # Resources
 
-[Apparently all I need to know is in here.](https://www.gnu.org/software/make/manual/make.html)  
-I might die.
+[Apparently all I need to know is in here.](https://www.gnu.org/software/make/manual/make.html) (I might die.)
 
 Super useful and used in my template: [Functions for File Names](https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html)
 
