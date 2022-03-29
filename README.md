@@ -15,7 +15,9 @@ The **end goal** of this first step is to build a solid understanding of Makefil
 
 > 🚨 This README **will definitely** be missing some information/details, because I'm only taking what _I think_ is enough for me. If you're using this documentation to build your Makefile and something just does not work as expected, please refer to the corresponding section in the [GNU documentation](https://www.gnu.org/software/make/manual/make.html). 🚨
 
-# Requirements for this Makefile
+# Objectives for this Makefile
+
+<details><summary>(Click to expand objectives)</summary>
 
 - [x] Be clearly written and divided into sections, the main one being the variables that are meant to be edited to customize the Makefile for each project and its needs.
 - [x] It should update my executable when any of the source files (including header files) is updated. (_I know that's what Makefiles **do**, but still._)
@@ -28,9 +30,11 @@ Bonus:
   - I could also add a few commands that run Valgrind and grep a possible '0 leaks' output and then outputs either "No leaks found", or the valgrind output if leaks are actually found.
     - This could be called `make harriet` 🔎
 
+</details>
+    
 # Result of this learning process
 
-My [Makefile template](Makefile_Template) :)
+My [Makefile template](Makefile) :)
 
 ![thankful.gif](http://www.reactiongifs.com/r/2013/11/oprah-clasps-hands.gif)
 
