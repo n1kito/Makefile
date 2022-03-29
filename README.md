@@ -80,7 +80,7 @@ My [Makefile template](Makefile) :)
 
 ![thankful.gif](http://www.reactiongifs.com/r/2013/11/oprah-clasps-hands.gif)  
 
-❗️42 requires students to list all the sources used in their Makefile as part of the norm, so I made a [second one](Makefile_for_42) for this reason.
+❗️ 42 requires students to list all the sources used in their Makefile as part of the norm, so I made a [second one](Makefile_for_42) for this reason.
 
 # Now let's learn about Makefiles
 
