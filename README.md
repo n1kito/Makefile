@@ -804,7 +804,7 @@ targets ...: target-pattern: prereq-patterns ...
 
 The `target-pattern` and `prereq-patterns` say how to compute the prerequisites of each target. each target is matched against the `target pattern` to extract a part of the target name, called the `stem`.This `stem` is substituted into each of the `prereq-patterns` to make the prerequisite names (one from each `prereq-pattern`).
 
-[learn more.](https://www.gnu.org/software/make/manual/make.html#Static-Usage)
+[Learn more.](https://www.gnu.org/software/make/manual/make.html#Static-Usage)
 
 Example that compiles each of foo.o and bar.o from the corresponding .c files:
 ```makefile
