@@ -749,7 +749,9 @@ $(patsubst %.c,%.o,$(wildcard *.c))
 Here, we have used another function, `patsubst`.
 
 <hr>
-<details><summary>See more about patsubst.</summary>
+
+**Patsubst ?**
+<details><summary>Click to expand.</summary>
 
 ```shell
 $(patsubst pattern,replacement,text)
