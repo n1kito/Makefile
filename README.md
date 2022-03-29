@@ -4,6 +4,7 @@
 
 <hr>
 <details><summary>Table of Contents</summary>
+<br>
 
 - [Goal of this README](#goal-of-this-readme)
 - [Objectives for this Makefile](#objectives-for-this-makefile)
