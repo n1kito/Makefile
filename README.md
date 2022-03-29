@@ -15,26 +15,26 @@
 		+ [Compilation](#compilation)
 		+ [Assembly](#assembly)
 		+ [Linking](#linking)
-	* [What a Makefile Rule looks like](#what-a-makefile-rule-looks-like)
+	* [What a Makefile rule looks like](#what-a-makefile-rule-looks-like)
 	* [How `make` processes a Makefile](#how--make--processes-a-makefile)
-	* [Using Variables to make Makefiles simpler](#using-variables-to-make-makefiles-simpler)
-	* [Letting `make` deduce the Recipes](#letting--make--deduce-the-recipes)
-	* [Another Style of Makefile (the one we use at 42)](#another-style-of-makefile--the-one-we-use-at-42-)
+	* [Using variables to make Makefiles simpler](#using-variables-to-make-makefiles-simpler)
+	* [Letting `make` deduce the recipes](#letting--make--deduce-the-recipes)
+	* [Another style of Makefile (the one we use at 42)](#another-style-of-makefile--the-one-we-use-at-42-)
 	* [Rules for cleaning the directory](#rules-for-cleaning-the-directory)
 	* [Writing Makefiles](#writing-makefiles)
 		+ [Splitting lines](#splitting-lines)
 		+ [Naming the Makefile](#naming-the-makefile)
-		+ [Including Other Makefiles](#including-other-makefiles)
+		+ [Including other Makefiles](#including-other-makefiles)
 		+ [How `make` reads a Makefile](#how--make--reads-a-makefile)
-		+ [How Makefiles are Parsed](#how-makefiles-are-parsed)
-	* [Writing Rules](#writing-rules)
-		- [Rule Example](#rule-example)
-		+ [Rule Syntax](#rule-syntax)
+		+ [How Makefiles are parsed](#how-makefiles-are-parsed)
+	* [Writing rules](#writing-rules)
+		- [Rule example](#rule-example)
+		+ [Rule syntax](#rule-syntax)
 		+ [Types of prerequisites](#types-of-prerequisites)
 			- [Normal prerequisites](#normal-prerequisites)
 			- [Order-only prerequisites](#order-only-prerequisites)
 			- [Usage](#usage)
-		+ [Using Wildcard Characters in File names](#using-wildcard-characters-in-file-names)
+		+ [Using wildcard characters in file names](#using-wildcard-characters-in-file-names)
 			- [Wildcard examples](#wildcard-examples)
 		+ [The function `wildcard`](#the-function--wildcard-)
 		+ [Static pattern rules](#static-pattern-rules)
@@ -310,7 +310,7 @@ The other rules are processed because their targets appear as prerequisites of t
 
 Thus, if we change the file `insert.c` and run `make`, make will compile that file to update `insert.o`, and then link `edit`. If we change the file `command.h` and run `make`, `make` will recompile the object files `kbd.o`, `command.o` and `files.o` and then link the file `edit`.
 
-## Using Variables to make Makefiles simpler
+## Using variables to make Makefiles simpler
 
 In the above example, we had to list all the object files twice in the rule for `edit`:
 
@@ -363,7 +363,7 @@ clean :
         rm edit $(objects)
 ```
 
-## Letting `make` deduce the Recipes
+## Letting `make` deduce the recipes
 
 It is not necessary to spell out the recipes for compiling the individual C source files, because `make` can figure them out: it has an _implicit rule_ for updating a `.o` file from a correspondingly named `.c` file using a `cc -c` command.  
 
@@ -399,7 +399,7 @@ This is how we would write the Makefile in actual practice. (The complications a
 
 Because implicit rules are so convenient, they are important. They are used frequently.
 
-## Another Style of Makefile (the one we use at 42)
+## Another style of Makefile (the one we use at 42)
 
 When objects of a Makefile are created only by implicit rules, an alternative style of Makefile is possible.  
 In this style of Makefile, you group entries by their prerequisites instead of by their targets.
@@ -475,7 +475,7 @@ Normally you should call your makefile either `makefile` or `Makefile`. (We reco
 
 The first name checked, `GNUmakefile`, is not recommended for most makefiles. 
 
-### Including Other Makefiles
+### Including other Makefiles
 
 The `include` directive tells `make` to suspend reading the current Makefile and read one or more other Makefiles before continuing.
 
@@ -582,7 +582,7 @@ endef
 
 _This one is a bit of a loaded notion for now, [revisiting](https://www.gnu.org/software/make/manual/make.html#Reading-Makefiles) might be a good idea._
 
-### How Makefiles are Parsed
+### How Makefiles are parsed
 
 GNU `make` parses makefiles line-by-line. Parsing proceeds using the following steps:
 1. Read in a full logical line, including backslash-escaped lines.
@@ -592,14 +592,14 @@ GNU `make` parses makefiles line-by-line. Parsing proceeds using the following s
 5. Scan the line for a separator character surch as `;` or `=`, to determine whether the line is a macro assignment or a rule.
 6. Internalize the resulting operation and read the next line.
 
-## Writing Rules
+## Writing rules
 
 A _rule_ appears in the makefile and says when and how to remake certain files, called the _targets_ (usually only one per rule). It lists the _prerequisites_ of the target, and the _recipe_ to use to create or update the target.
 
 The order of the rules does not matter, except for determining the _default goal_: the target that `make` should consider first, which is the first rule in the first makefile.  
 Therefore, we usually write the makefile so that the first rule is the one for compilibng the entire program or all the programs described by the makefile.
 
-#### Rule Example
+#### Rule example
 
 ```makefile
 foo.o : foo.c defs.h	# module for twiddling the frobs
@@ -613,7 +613,7 @@ The recipe starts with a tab to identify it as a recipe.
 + How to decide whether `foo.o` is out of date: it is out of date if it does not exist, or if either `foo.c` or `defs.h` is more recent than it.
 + How to update the file `foo.o`: by running cc as stated. The recipe does not explicitly mention `defs.h`, but we presume that `foo.c` includes it, and that is why `defs.h` was added to the prerequisites.
 
-### Rule Syntax
+### Rule syntax
 
 In general, a rule looks like this:
 
@@ -683,7 +683,7 @@ $(OBJDIR):
 
 Now, the rule to create the `objdir` directory will be run if needed, before any `.o` is built, but no `.o` will be built because the `` directory timestamp changed.
 
-### Using Wildcard Characters in File names
+### Using wildcard characters in file names
 
 The wildcard characters in `make` are: `*`, `?`, and `[..]`.  
 
