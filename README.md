@@ -95,7 +95,9 @@ The make program uses the makefile database and the last-modification times of t
 
 > Compilation is the process of translating the code you write into a language that is native to the machine you are targeting.
 
-## Compilation steps
+## Compilation thoery
+
+### Compilation steps
 
 ```mermaid
 flowchart LR;
@@ -105,7 +107,7 @@ C-- Assembly -->D(["Machine Code (.o, .obj)"])
 D-- Linking -->E["Executable (.out)"]
 ```
 
-## Preprocessing
+### Preprocessing
 In pre-processed (.i) files:
 + Header files are included
 + All Macros are resolved (replaced with their values)
@@ -153,7 +155,7 @@ int main(void)
 }
 ```
 
-## Compilation
+### Compilation
 
 Compilation takes pre-processed files as input, and converts this high-level source code into **assembly instructions**, which are **specific to the target processor architecture**.
 
@@ -201,7 +203,7 @@ L_.str.1:                               ## @.str.1
 .subsections_via_symbols
 ```
 
-## Assembly
+### Assembly
 
 Converts the assembly instructions that resulted from the compilation, and generated **object code** with .o extension.
 
@@ -217,7 +219,7 @@ The following file might look like something like this:
 
 ![.o file](img/o_file.jpg)
 
-## Linking
+### Linking
 
 Until now we have only included header files, which contain function declarations, like the `printf()` used in our program, which still has no definition.  
 It will be defined in the corresponding library files.
