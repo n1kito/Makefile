@@ -67,10 +67,6 @@ The **end goal** of this first step is to build a solid basic understanding of M
     - I think this works but I need to check in more detail.
 - [x] Independently look for all the source files by itself in the necessary folders, avoiding me the task of listing them one by one. I know this can be done I just want to make it happen.
 - [x] I also want the Makefile to display colored messages that will help users understand what is going on (and be fun to look at).
-Bonus:
-- [ ] Maybe add some useful rules, like "debug" to compile with the `-g` flag, or `leaks` to use `debug` and then run `valgrind` on the program.
-  - I could also add a few commands that run Valgrind and grep a possible '0 leaks' output and then outputs either "No leaks found", or the valgrind output if leaks are actually found.
-    - This could be called `make harriet` 🔎
 
 </details>
 
