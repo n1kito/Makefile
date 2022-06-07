@@ -70,6 +70,10 @@ The **end goal** of this first step is to build a solid basic understanding of M
 
 </details>
 
+## Updates
+
+- Added the `--no-print-directory` flag to anywhere `make -C` is called. This flag removes the messages indicating which directory we're moving into, and the ouput looks cleaner.
+
 # Result of this learning process
 
 My [Makefile template](Makefile) :)
