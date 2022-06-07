@@ -38,7 +38,8 @@ OBJ_FILES	:= $(addprefix $(BIN_DIR)/, $(addsuffix .o, $(SRC_FILES)))
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	make -C libft
+	@echo "make $(LIB_DIR)"
+	@make --no-print-directory -C libft
 	@$(CC) -o $(NAME) $(OBJ_FILES) -L $(LIB_DIR) -l $(LIB)
 	@echo "$(GREEN)$(NAME) compiled :)$(END_COLOR)"
 
@@ -53,7 +54,7 @@ $(BIN_DIR):
 clean:
 	@rm -rf $(BIN_DIR)
 	@echo "$(YELLOW)$(NAME) object & dependency files cleaned.$(END_COLOR)"
-	@make clean -C libft
+	@make clean --no-print-directory -C libft
 
 fclean: clean
 	@rm -f $(NAME)
