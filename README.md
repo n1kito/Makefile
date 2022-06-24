@@ -74,7 +74,6 @@ The **end goal** of this first step is to build a solid basic understanding of M
 
 I made a video about Makefile basics !
 
-## understanding Makefiles
 <p align="center">
 <br>
 <a href="https://www.youtube.com/watch?v=vngK2abJ3_I" target="_blank">
