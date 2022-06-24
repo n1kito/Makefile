@@ -70,6 +70,20 @@ The **end goal** of this first step is to build a solid basic understanding of M
 
 </details>
 
+# Bonus
+
+I made a video about Makefile basics !
+
+## understanding Makefiles
+<p align="center">
+<br>
+<a href="https://www.youtube.com/watch?v=vngK2abJ3_I" target="_blank">
+<img src="img/yt_tn.png" alt="understanding Makefiles" width="300px"><br>
+(understanding Makefiles)
+</a>
+</p>
+
+
 ## Updates
 
 - Added the `--no-print-directory` flag to anywhere `make -C` is called. This flag removes the messages indicating which directory we're moving into, and the ouput looks cleaner.
