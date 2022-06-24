@@ -77,7 +77,7 @@ I made a video about Makefile basics !
 <p align="center">
 <br>
 <a href="https://www.youtube.com/watch?v=vngK2abJ3_I" target="_blank">
-<img src="img/yt_tn.png" alt="understanding Makefiles" width="300px" style="border-radius:50%"><br>
+<img src="img/yt_tn.png" alt="understanding Makefiles" width="300px"><br>
 (understanding Makefiles)
 </a>
 </p>
