@@ -55,6 +55,7 @@ I predict there will be a lot of sections identical to the official [GNU documen
 
 The **end goal** of this first step is to build a solid basic understanding of Makefiles, and use it to write a working Makefile template that is my own, and that I will be able to use for my upcoming 42 projects.  
 
+> [!WARNING]
 > 🚨 This README **will definitely** be missing some information/details, because I'm only taking what _I think_ is enough for me. If you're using this documentation to build your Makefile and something just does not work as expected, please refer to the corresponding section in the [GNU documentation](https://www.gnu.org/software/make/manual/make.html). 🚨
 
 # Objectives for this Makefile
